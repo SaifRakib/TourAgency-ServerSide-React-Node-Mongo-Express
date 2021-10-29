@@ -33,13 +33,14 @@ async function run() {
       // add services
       app.post("/addService", async(req,res) => {
           const result = await servicesCollection.insertOne(req.body);
+          res.json(result);
           console.log(result);
       })
 
         //  Get all services
         app.get("/allServices", async (req, res) => {
             const allServices = await servicesCollection.find({}).toArray();
-            res.send(allServices);
+            res.json(allServices);
         });
 
          // GET Single Service
