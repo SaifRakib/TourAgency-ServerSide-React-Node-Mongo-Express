@@ -30,11 +30,11 @@ async function run() {
       await client.connect();
       const database = client.db("tourItems");
       const servicesCollection = database.collection("services");
+      const orderCollection = database.collection("orders")
       // add services
       app.post("/addService", async(req,res) => {
           const result = await servicesCollection.insertOne(req.body);
           res.json(result);
-          console.log(result);
       })
 
         //  Get all services
@@ -52,13 +52,27 @@ async function run() {
 
         })
 
-              // DELETE API
-            //   app.delete('/services/:id', async (req, res) => {
-            //     const id = req.params.id;
-            //     const query = { _id: ObjectId(id) };
-            //     const result = await servicesCollection.deleteOne(query);
-            //     res.json(result);
-            // })
+        // Get order information
+        app.post('/orders',async (req,res) => {
+           const result = await orderCollection.insertOne(req.body);
+           res.json(result);
+           console.log(result);
+        })
+
+          //  Get all order
+          app.get("/orders", async (req, res) => {
+            const allOrders = await orderCollection.find({}).toArray();
+            res.json(allOrders);
+        });
+
+              // Delete order
+              app.delete('/deleteOrder/:id', async (req, res) => {
+                const id = req.params.id;
+                const query = { _id: ObjectId(id) };
+                const result = await orderCollection.deleteOne(query);
+                res.json(result);
+                console.log(result);
+            })
       
 
     } finally {
