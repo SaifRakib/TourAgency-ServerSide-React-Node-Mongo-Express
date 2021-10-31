@@ -65,6 +65,18 @@ async function run() {
             res.json(allOrders);
         });
 
+        // Get all order email
+        app.get("/myorders", async(req,res) => {
+          let query = {};
+          const email = req.query.email;
+          if(email){
+            query = { email: email }
+          }
+          const cursor = orderCollection.find(query);
+          const orders = await cursor.toArray();
+          res.json(orders);
+        })
+
 
          // GET Single order
          app.get('/orders/:id', async (req, res) => {
