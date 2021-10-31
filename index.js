@@ -64,6 +64,8 @@ async function run() {
             const allOrders = await orderCollection.find({}).toArray();
             res.json(allOrders);
         });
+
+
          // GET Single order
          app.get('/orders/:id', async (req, res) => {
           const id = req.params.id;
